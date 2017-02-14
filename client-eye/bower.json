@@ -1,0 +1,24 @@
+{
+  "name": "asistiva",
+  "version": "0.0.0",
+  "homepage": "https://github.com/hookdump/asistiva",
+  "authors": [
+    "Ignacio Freiberg <hookdump@gmail.com>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-socket-io": "^0.7.0"
+  }
+}

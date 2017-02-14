@@ -1,0 +1,21 @@
+!.gitkeep
+.sass-cache
+tmp
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directories
+node_modules
+bower_components
+
+# Build files
+build
+templates.js
