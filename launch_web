@@ -1,2 +1,5 @@
+CHECK=$("./check_node")
+code=$?; if [[ $code != 0 ]]; then echo $CHECK && exit 1; fi
+
 cd client-eye
 gulp dev
