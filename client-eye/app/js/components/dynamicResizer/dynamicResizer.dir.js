@@ -32,7 +32,7 @@ var dynamicResizer = function($window) {
 
         // TODO: Move sidebar offsets, etc. to optional parameters
         // TODO: Move resizing schemes to a config file
-        if (resizeType === "restrict") {
+        if (resizeType === "ratio") {
           // Start maximizing Height, then adjust Width.
           newDim.height = current.height - navbar.height;
           newDim.width = Math.floor(newDim.height * 1.415); // 1020x800
@@ -42,10 +42,7 @@ var dynamicResizer = function($window) {
             newDim.width = current.width - 0;
             newDim.height = Math.floor(newDim.width / 1.415);
           }
-        } else if (resizeType === "full") {
-          newDim.width = current.width - 130; // for sidebar
-          newDim.height = current.height - navbar.height;
-        } else if (resizeType === "full2") { // new full screen trackers!
+        } else if (resizeType === "full") { // new full screen trackers!
           newDim.width = current.width;
           newDim.height = current.height;
         } else if (resizeType === "h") {

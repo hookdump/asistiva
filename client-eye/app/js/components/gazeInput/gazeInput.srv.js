@@ -4,7 +4,7 @@ var servicesModule = require('./../../_load.srv.js');
 /**
  * @ngInject
  */
-function BaseGazeInput($document, $rootScope, $window) {
+function GazeInput($document, $rootScope, $window) {
   var $ = $window.jQuery;
   var Math = $window.Math;
   var MAX_VALID_X = 10000;
@@ -16,6 +16,7 @@ function BaseGazeInput($document, $rootScope, $window) {
   var service = {
     maxX: null,         maxY: null,
     gazeX: null,        gazeY: null,
+    offsetX: null,      offsetY: null,
     cursorX: 0,         cursorY: 0,
     lastValidGazeX: 0,  lastValidGazeY: 0,
     cursorInterval: null,
@@ -23,12 +24,22 @@ function BaseGazeInput($document, $rootScope, $window) {
     cursorFollowInterval: 25
   };
 
+  service.initWorkspace = function(workspaceElement) {
+    // TODO: Update on window resize
+    service.maxX = workspaceElement.width();
+    service.maxY = workspaceElement.height();
+    service.offsetX = workspaceElement.offset().left;
+    service.offsetY = workspaceElement.offset().top;
+    console.log('Workspace element initialized!', service);
+  }
+
   // Update gaze position
   service.moveGaze = function(x,y) {
     service.gazeX = x;
     service.gazeY = y;
   };
 
+  // Activate elements below cursor
   service.reactGaze = function(x,y) {
 
     // Get element under cursor
@@ -68,11 +79,11 @@ function BaseGazeInput($document, $rootScope, $window) {
   service.cursorX = 0;
   service.cursorY = 0;
   service.lastCursor = {x: 0, y: 0};
-  $("#cursor").css({left: service.cursorX, top: service.cursorY});
+  $("#gazeCursor").css({left: service.cursorX, top: service.cursorY});
 
   service.cursorInterval = setInterval(function() {
 
-    if (service.gazeX < 0 || service.gazeY < 0 || service.gazeX > MAX_VALID_X || service.gazeY > MAX_VALID_Y) {
+    if (service.gazeX < -MAX_VALID_X || service.gazeY < -MAX_VALID_Y || service.gazeX > MAX_VALID_X || service.gazeY > MAX_VALID_Y) {
       // Invalid gaze! Restore last valid one!
       console.log('restoring last valid gaze');
       service.gazeX = service.lastValidGazeX;
@@ -94,7 +105,7 @@ function BaseGazeInput($document, $rootScope, $window) {
 
       // Move visual display of Cursor
       // $rootScope.$broadcast('cursor', [service.cursorX, service.cursorY]);
-      $("#cursor").css({left: service.cursorX, top: service.cursorY});
+      $("#gazeCursor").css({left: service.cursorX, top: service.cursorY});
 
       // Affect the element below the Cursor
       service.reactGaze(service.cursorX, service.cursorY);
@@ -105,9 +116,7 @@ function BaseGazeInput($document, $rootScope, $window) {
 
   }, service.cursorFollowInterval);
 
-  service.testMode = false;
-
   return service;
 }
 
-servicesModule.service('GazeInput', ['$document', '$rootScope', '$window', BaseGazeInput]);
+servicesModule.service('GazeInput', ['$document', '$rootScope', '$window', GazeInput]);
