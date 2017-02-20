@@ -6,8 +6,11 @@ var servicesModule = require('./../_load.srv.js');
  */
 function INPUT_mouse($document, $log, GazeInput) {
   var service = {
-    init: () => {
-      $log.info('Mouse input initialized!');
+    init: (workspaceEl) => {
+      $log.info('Mouse input initialized!', workspaceEl);
+      workspaceEl.css({cursor: 'none'});
+      workspaceEl.hide();
+
       $document.bind("mousemove.asistiva", function(event) {
         var x = event.pageX - GazeInput.offsetX;
         var y = event.pageY - GazeInput.offsetY;

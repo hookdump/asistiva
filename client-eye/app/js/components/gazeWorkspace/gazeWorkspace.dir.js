@@ -37,7 +37,7 @@ var gazeWorkspace = function(GazeInput, $injector, $log) {
       if (scope.InputEngine) {
         $log.info(`Input engine loaded! Initializing...`);
         element.addClass(`INPUT_${selectedEngine}`);
-        scope.InputEngine.init();
+        scope.InputEngine.init(element);
       }
     }
   };

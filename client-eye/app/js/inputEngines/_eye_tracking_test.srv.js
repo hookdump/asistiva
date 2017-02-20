@@ -19,8 +19,10 @@ function INPUT_eye_tracking_test($document, $log, GazeInput) {
       var gazeY = GazeInput.offsetY - (y * GazeInput.maxY);
       return [gazeX, gazeY];
     },
-    init: () => {
-      $log.info('Eye-tracking TEST input initialized!');;
+    init: (workspaceEl) => {
+      $log.info('Eye-tracking TEST input initialized!');
+      workspaceEl.css({cursor: 'crosshair'});
+
       $document.bind("mousemove.asistiva", function(event) {
         var x = event.pageX - GazeInput.offsetX;
         var y = event.pageY - GazeInput.offsetY;

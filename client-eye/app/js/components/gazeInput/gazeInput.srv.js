@@ -20,7 +20,7 @@ function GazeInput($document, $rootScope, $window) {
     cursorX: 0,         cursorY: 0,
     lastValidGazeX: 0,  lastValidGazeY: 0,
     cursorInterval: null,
-    cursorFollowSteps: 4,
+    cursorFollowSteps: 5,
     cursorFollowInterval: 25
   };
 
