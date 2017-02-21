@@ -30,7 +30,6 @@ function GazeInput($document, $rootScope, $window) {
     service.maxY = workspaceElement.height();
     service.offsetX = workspaceElement.offset().left;
     service.offsetY = workspaceElement.offset().top;
-    console.log('Workspace element initialized!', service);
   };
 
   // Update gaze position
@@ -121,4 +120,4 @@ function GazeInput($document, $rootScope, $window) {
   return service;
 }
 
-servicesModule.service('GazeInput', ['$document', '$rootScope', '$window', GazeInput]);
+servicesModule.service('GazeInput', GazeInput);

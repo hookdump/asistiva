@@ -8,7 +8,7 @@ predictor.build_query = function(query, params) {
 
   var isPresent = function(param) {
     if (!params[param]) {
-      log.error(context, query, 'param "' + param + '" is required'); 
+      log.error(context, query, 'param "' + param + '" is required');
       return false;
     } else {
       return true;
@@ -19,11 +19,11 @@ predictor.build_query = function(query, params) {
     if (typeof params[param] === type) {
       return true;
     } else {
-      log.error(context, query, 'param "' + param + '" should have type "' + type + '"'); 
+      log.error(context, query, 'param "' + param + '" should have type "' + type + '"');
       return false;
-    }   
+    }
   }
-  
+
   switch(query) {
     case 'cancelWord':
       if (!isPresent('words')) return null;
@@ -77,7 +77,7 @@ predictor.run_query = function(query, cb) {
       return cb(null, results);
     }
   });
-}; 
+};
 
 predictor.init = function (config) {
   var self = this;

@@ -1,33 +1,18 @@
 <gaze-workspace input-engine="eye_tracking_test">
   <gaze-cursor>
     <div class="word0 hidden">
-      <span>test1</span>
+      <span class="bg">top</span>
     </div>
-    <div class="word1 hidden">
-      <span>test2</span>
+    <div class="word1">
+      <span class="bg">left</span>
     </div>
-    <div class="word2 hidden">
-      <span>test3</span>
+    <div class="word2" ng-class="{ hidden: !currentWord }">
+      <span class="bg">{{currentWord}} <span ng-show="startingNewWord">(...)</span></span>
     </div>
-    <div class="word3 hidden">
-      <span>test4</span>
+    <div class="word3">
+      <span class="bg">right</span>
     </div>
   </gaze-cursor>
-
-  <!--
-  <div class="panel panel-default custom-panel">
-    <div class="row custom-row">
-      <div class="col-md-4 custom-action" on-dwell="alert('1')">test 1</div>
-      <div class="col-md-4 custom-action" on-dwell="alert('2')">test 2</div>
-      <div class="col-md-4 custom-action" on-dwell="alert('3')">test 3</div>
-    </div>
-    <div class="row custom-row">
-      <div class="col-md-4 custom-action" on-dwell="alert('4')">test 4</div>
-      <div class="col-md-4 custom-action" on-dwell="alert('5')">test 5</div>
-      <div class="col-md-4 custom-action" on-dwell="alert('6')">test 6</div>
-    </div>
-  </div>
-  -->
 
   <div class="panel panel-default custom-panel">
     <keyboard></keyboard>

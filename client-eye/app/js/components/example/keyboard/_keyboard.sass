@@ -1,18 +1,37 @@
+$border_color: #E8E8E8
+
 .gaze-keyboard
   ul
     list-style: none
     padding: 0
     margin: 0
 
+    &:first-of-type
+      li
+        border-top: 1px solid $border_color
+
+    li
+      border-right: 1px solid $border_color
+      border-bottom: 1px solid $border_color
+      &:first-of-type
+        border-left: 1px solid $border_color
+
     &.controls
       li
         width: 33%
+      li:last-of-type
+        float: right
+
+    &.text
+      li
+        width: 100%
+        padding: 5px
+        font-size: 1.6em
 
     li
       display: inline-block
       width: 10%
       height: 10vh
-      border: 1px solid green
       position: relative
       .counter
         position: absolute

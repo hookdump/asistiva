@@ -1,6 +1,6 @@
 <div class="gaze-keyboard">
   <ul ng-repeat="row in rows" class="keys">
-    <li ng-repeat="key in row" on-dwell="alert('x')">
+    <li ng-repeat="key in row" on-dwell dwell-trigger="selectKey" dwell-data="key">
       <div class="counter"></div>
       <div class="key" ng-if="key.type == 'letter'">
         {{key.text}}
@@ -11,20 +11,23 @@
     </li>
   </ul>
   <ul class="controls">
-    <li on-dwell="alert('x')">
+    <li on-dwell dwell-trigger="selectWord" dwell-data="predictions[0]">
       <div class="key">
-        PREDICTION 1
+        {{ predictions[0] || '...' }}
       </div>
     </li>
-    <li on-dwell="alert('x')">
+    <li on-dwell dwell-trigger="selectWord" dwell-data="currentWord">
       <div class="key">
-        PREDICTION 1
+        {{ currentWord || '...' }}
       </div>
     </li>
-    <li on-dwell="alert('x')">
+    <li on-dwell dwell-trigger="selectWord" dwell-data="predictions[1]">
       <div class="key">
-        PREDICTION 1
+        {{ predictions[1] || '...' }}
       </div>
     </li>
+  </ul>
+  <ul class="text">
+    <li>{{ currentText }}</li>
   </ul>
 </div>

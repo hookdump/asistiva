@@ -4,25 +4,36 @@ var directivesModule = require('./../../_load.dir.js');
 /**
  * @ngInject
  */
-var onDwell = function($timeout) {
+var onDwell = function($timeout, $log) {
   return {
     restrict: 'A',
     scope: {
-      onDwell: '&'
+      dwellTrigger: '&',
+      dwellData: '='
     },
     link: function(scope, element, attrs) {
       var counter = 0;
       var timeoutId = null;
       var increment = 0;
-      var DWELL_THRESHOLD = 5;
+      var DWELL_COUNTER_THRESHOLD = 5;
+      var DWELL_INTERVAL = 100;
 
       element.addClass('activable');
 
       var trigger = () => {
-        element.removeClass('activating').removeClass('deactivating').addClass('trigger');
-        $timeout(() => {
-          element.removeClass('trigger');
-        }, 500);
+        console.log('trigger', scope.dwellData);
+        element.removeClass('activating').removeClass('deactivating'); // .addClass('trigger');
+        if (scope.dwellTrigger()) {
+          scope.dwellTrigger()(scope.dwellData);
+        } else {
+          $log.error('No dwell trigger defined!');
+        }
+
+        try {
+          scope.$apply();
+        } catch(err) {
+          $log.error('Cannot $apply!', err);
+        }
       };
 
   		var stopInterval = () => {
@@ -34,27 +45,26 @@ var onDwell = function($timeout) {
   		var startInterval = () => {
         element.addClass('activating').removeClass('deactivating');
   			timeoutId = setInterval(function() {
-
-          element.find('.counter').text(counter);
-
   				// Increment + show number
   				counter += increment;
   				element.attr('counter', counter);
 
-  				// Increasing and I'm at the limit
-  				if (counter > DWELL_THRESHOLD && increment === 1) { // 1 second!
+          element.find('.counter').text(counter); // just for displaying
+
+  				if (counter > DWELL_COUNTER_THRESHOLD && increment === 1) { // 1 second!
+    				// Increasing and I'm at the limit
   					counter = 0;
   					stopInterval();
             trigger();
 
-  					// Decreasing and I'm at the limit
   				} else if (counter < 0 && increment < 0) {
+  					// Decreasing and I'm at the limit
             counter = 0;
   					element.attr('counter', '');
             element.removeClass('activating').removeClass('deactivating');
   					stopInterval();
   				}
-  			}, 100);
+  			}, DWELL_INTERVAL);
   		};
 
 
