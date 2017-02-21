@@ -31,7 +31,6 @@ var gazeWorkspace = function(GazeInput, $injector, $log) {
           }
         }
       };
-
       loadEngine(selectedEngine, false);
 
       if (scope.InputEngine) {

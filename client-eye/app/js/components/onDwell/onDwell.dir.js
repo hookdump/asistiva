@@ -19,7 +19,6 @@ var onDwell = function($timeout) {
       element.addClass('activable');
 
       var trigger = () => {
-        console.log('TRIGGERED DWELL!');
         element.removeClass('activating').removeClass('deactivating').addClass('trigger');
         $timeout(() => {
           element.removeClass('trigger');
@@ -27,7 +26,6 @@ var onDwell = function($timeout) {
       };
 
   		var stopInterval = () => {
-        console.log('Stop interval');
         element.removeClass('activating').removeClass('deactivating');
   			clearInterval(timeoutId);
   			timeoutId = null;
@@ -35,7 +33,6 @@ var onDwell = function($timeout) {
 
   		var startInterval = () => {
         element.addClass('activating').removeClass('deactivating');
-        console.log('Start interval');
   			timeoutId = setInterval(function() {
 
           element.find('.counter').text(counter);
@@ -43,7 +40,6 @@ var onDwell = function($timeout) {
   				// Increment + show number
   				counter += increment;
   				element.attr('counter', counter);
-          console.log('counter:', counter);
 
   				// Increasing and I'm at the limit
   				if (counter > DWELL_THRESHOLD && increment === 1) { // 1 second!
@@ -56,7 +52,6 @@ var onDwell = function($timeout) {
             counter = 0;
   					element.attr('counter', '');
             element.removeClass('activating').removeClass('deactivating');
-            console.log('CANCEL DWELL!');
   					stopInterval();
   				}
   			}, 100);
@@ -64,7 +59,6 @@ var onDwell = function($timeout) {
 
 
       element.on('gaze_enter', (ev) => {
-        console.log('gaze enter!');
         increment = 1;
         if (!timeoutId) {
           startInterval();
@@ -72,7 +66,6 @@ var onDwell = function($timeout) {
       });
 
       element.on('gaze_leave', (ev) => {
-        console.log('gaze leave!');
         element.removeClass('activating').addClass('deactivating');
         increment = -1;
       });

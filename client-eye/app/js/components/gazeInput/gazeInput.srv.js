@@ -58,7 +58,6 @@ function GazeInput($document, $rootScope, $window) {
       // deactivate everything
       $('.active').each(function(index, el) {
         $(el).removeClass('active');
-        console.log('LEAVING', $(el));
         $(el).trigger("gaze_leave");
       });
 
@@ -72,6 +71,7 @@ function GazeInput($document, $rootScope, $window) {
       // deactivate everything
       $('.active').each(function(index, el) {
         $(el).removeClass('active');
+        $(el).trigger("gaze_leave");
       });
 
     }
