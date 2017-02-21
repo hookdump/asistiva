@@ -1,6 +1,3 @@
-$lateral-words-y: 7px
-$lateral-words-x: 4px
-
 @mixin common_cursor
   position: absolute
   background-color: none
@@ -10,54 +7,34 @@ $lateral-words-x: 4px
   z-index: 99999
   pointer-events: none
 
-.gazeCursor2
-  @include common_cursor
-  display: none
-  width: 8px
-  height: 8px
-  border-radius: 4px
-  border: 2px solid red
-
 #gazeCursor
   @include common_cursor
   width: 12px
   height: 12px
   border-radius: 6px
-  border: 3px solid red
+  border: 2px solid #404040
   margin: -6px 0px 0px -6px
 
-  .word0, .word1, .word2, .word3
-    position: absolute
-    display: inline-bock
-    width: 200px
-    font-weight: bold
-    pointer-events: none
+@keyframes pulsate
+  0%
+    transform: scale(3)
+    opacity: 0.0
+  50%
+    opacity: 0.4
+  100%
+    transform: scale(.1)
+    opacity: 1
 
-    &.hidden
-      display: none
-
-    span
-      background-color: rgba(0,0,0,0.5)
-      padding: 1px 4px 3px 4px
-      pointer-events: none
-
-    &.word1
-      top: 0
-      margin-left: -204px - $lateral-words-x
-      margin-top: $lateral-words-y * -1
-      text-align: right
-
-    &.word2
-      margin-left: -97px
-      top: 14px
-      text-align: center
-
-    &.word0
-      margin-left: -97px
-      top: -28px
-      text-align: center
-
-    &.word3
-      top: 0
-      margin-top: $lateral-words-y * -1
-      left: 10px + $lateral-words-x
+.gazeAnimation
+  border: 5px solid #333
+  border-radius: 30px
+  height: 30px
+  left: 50%
+  margin: -15px 0 0 -15px
+  opacity: 0
+  position: absolute
+  top: 50%
+  width: 30px
+  &.animate
+    animation: pulsate 0.6s ease-out
+    animation-iteration-count: 1

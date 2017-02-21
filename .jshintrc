@@ -1,6 +1,7 @@
 {
   "globalstrict": true,
   "node": true,
+  "esversion": 6,
   "globals": {
     "angular": false,
     "describe": false,

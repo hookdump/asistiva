@@ -31,7 +31,7 @@ function GazeInput($document, $rootScope, $window) {
     service.offsetX = workspaceElement.offset().left;
     service.offsetY = workspaceElement.offset().top;
     console.log('Workspace element initialized!', service);
-  }
+  };
 
   // Update gaze position
   service.moveGaze = function(x,y) {
@@ -58,12 +58,14 @@ function GazeInput($document, $rootScope, $window) {
       // deactivate everything
       $('.active').each(function(index, el) {
         $(el).removeClass('active');
+        console.log('LEAVING', $(el));
         $(el).trigger("gaze_leave");
       });
 
       // activate this one
       $elem.addClass('active');
       $elem.trigger("gaze_enter");
+      $rootScope.$emit('gazeCursor.animate');
 
     } else {
 
@@ -108,7 +110,7 @@ function GazeInput($document, $rootScope, $window) {
       $("#gazeCursor").css({left: service.cursorX, top: service.cursorY});
 
       // Affect the element below the Cursor
-      service.reactGaze(service.cursorX, service.cursorY);
+      service.reactGaze(service.cursorX + service.offsetX, service.cursorY + service.offsetY);
 
       service.lastCursor.x = service.cursorX;
       service.lastCursor.y = service.cursorY;

@@ -73,6 +73,6 @@ var dynamicResizer = function($window) {
     }
   };
 
-}
+};
 
 directivesModule.directive('dynamicResizer', ['$window', dynamicResizer]);
