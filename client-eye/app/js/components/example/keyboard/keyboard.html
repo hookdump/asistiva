@@ -1,0 +1,30 @@
+<div class="gaze-keyboard">
+  <ul ng-repeat="row in rows" class="keys">
+    <li ng-repeat="key in row" on-dwell="alert('x')">
+      <div class="counter"></div>
+      <div class="key" ng-if="key.type == 'letter'">
+        {{key.text}}
+      </div>
+      <div class="key" ng-if="key.type == 'custom'">
+        <span class="glyphicon glyphicon-{{key.icon}}"></span>
+      </div>
+    </li>
+  </ul>
+  <ul class="controls">
+    <li on-dwell="alert('x')">
+      <div class="key">
+        PREDICTION 1
+      </div>
+    </li>
+    <li on-dwell="alert('x')">
+      <div class="key">
+        PREDICTION 1
+      </div>
+    </li>
+    <li on-dwell="alert('x')">
+      <div class="key">
+        PREDICTION 1
+      </div>
+    </li>
+  </ul>
+</div>

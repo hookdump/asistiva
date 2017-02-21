@@ -1,5 +1,10 @@
+@import 'keyboard/keyboard'
+
 $darkGray: #606060
 $lightGray: #ECECEC
+
+$lateral-words-y: 7px
+$lateral-words-x: 4px
 
 html, body
   margin: 0
@@ -20,3 +25,40 @@ h1
       padding-top: 35px
       min-height: 100px
       text-align: center
+
+.word0, .word1, .word2, .word3
+  position: absolute
+  display: inline-bock
+  width: 200px
+  font-weight: normal
+  pointer-events: none
+  color: white
+
+  &.hidden
+    display: none
+
+  span
+    background-color: rgba(0,0,0,0.6)
+    padding: 1px 4px 3px 4px
+    pointer-events: none
+
+  &.word1
+    top: 0
+    margin-left: -204px - $lateral-words-x
+    margin-top: $lateral-words-y * -1
+    text-align: right
+
+  &.word2
+    margin-left: -97px
+    top: 14px
+    text-align: center
+
+  &.word0
+    margin-left: -97px
+    top: -28px
+    text-align: center
+
+  &.word3
+    top: 0
+    margin-top: $lateral-words-y * -1
+    left: 10px + $lateral-words-x
