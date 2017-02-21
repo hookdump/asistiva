@@ -110,9 +110,10 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
         // Fetch Predictive Text suggestions
         if (scope.currentWord.length > 0) {
           PredictiveText.getSuggestions(scope.currentWord).then((words) => {
-            $log.info('SUGGESTIONS', words);
-            scope.suggestions[0] = words[0].toUpperCase();
-            scope.suggestions[1] = words[1].toUpperCase();
+            if (words && words.length > 0) {
+              scope.suggestions[0] = words[0].toUpperCase();
+              scope.suggestions[1] = words[1].toUpperCase();
+            }
           });
         } else {
           scope.clearSuggestions();
