@@ -5,10 +5,10 @@ module.exports = {
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Access-Control-Allow-Headers': 'Content-Type'
   },
-  mysql_config: {
+  psql_config: {
     host     : 'localhost',
-    user     : 'root',
-    password : 'soke6540',
+    user     : 'asistiva',
+    password : '',
     database : 'asistiva',
     connectionLimit: 10
   }

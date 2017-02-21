@@ -1,5 +1,6 @@
 'use strict'
-var mysql = require('mysql');
+var psql = require('pg');
+var Pool = require('pg').Pool;
 var predictor = {};
 
 predictor.build_query = function(query, params) {
@@ -29,23 +30,22 @@ predictor.build_query = function(query, params) {
       if (!isPresent('words')) return null;
       if (!isType('words', 'array')) return null;
 
-      var joined_words = '("' + params.words.join('","') + '")';
-      var q = 'UPDATE `palabras` SET `freq2` = `freq2` - 1 WHERE palabra IN ' + joined_words + ';';
+      var joined_words = '(\'' + params.words.join('\',\'') + '\')';
+      var q = 'UPDATE words SET used = used - 1 WHERE word IN ' + joined_words + ';';
       return q;
       break;
 
     case 'findWord':
       if (!isPresent('word')) return null;
       if (!isType('word', 'string')) return null;
-
-      var q = 'SELECT id, palabra, freq2 FROM palabras WHERE `palabra` = "' + params.word + '";';
+      var q = 'SELECT id, word FROM words WHERE word = \'' + params.word + '\';';
       return q;
       break;
 
     case 'createWord':
       if (!isPresent('word')) return null;
       if (!isType('word', 'string')) return null;
-      var q = 'INSERT INTO palabras (palabra, freq2, fixed) VALUES ("' + params.word + '", 2, 1);';
+      var q = 'INSERT INTO words (word, used) VALUES (\'' + params.word + '\', 1);';
       return q;
 
       break;
@@ -53,7 +53,7 @@ predictor.build_query = function(query, params) {
     case 'updateWord':
       if (!isPresent('id')) return null;
       if (!isType('id', 'string')) return null;
-      var q = 'UPDATE `palabras` SET `freq2` = `freq2` + 1 WHERE `id` = ' + params.id + ';';
+      var q = 'UPDATE words SET used = used + 1 WHERE id = ' + params.id + ';';
       break;
 
     default:
@@ -82,7 +82,7 @@ predictor.run_query = function(query, cb) {
 predictor.init = function (config) {
   var self = this;
   log.start('Predictor');
-  self.pool = mysql.createPool(config.mysql_config);
+  self.pool = new Pool(config.psql_config);
 }
 
 predictor.cancelWords = function(words, cb) {
@@ -99,15 +99,16 @@ predictor.useWord = function(word, cb) {
   }
 
   var q = self.build_query('findWord', {word: word});
-  self.run_query(q, function(err, rows, fields) {
+  self.run_query(q, function(err, result, fields) {
+    var rows = result.rows || [];
 
     if (!rows || rows.length == 0) {
       // create
-      var q2 = self.build_query('createWord', word);
+      var q2 = self.build_query('createWord', {word: word});
     } else {
       // update
       var myId = rows[0].id;
-      var q2 = self.build_query('updateWord', myId);
+      var q2 = self.build_query('updateWord', {id: myId});
     }
 
   	self.run_query(q2, function(err, rows, fields) {
@@ -119,17 +120,19 @@ predictor.useWord = function(word, cb) {
 
 predictor.predict = function(word, cb) {
 	var self = this;
-  var results = [];
-  var myquery = 'SELECT palabra FROM palabras WHERE palabra LIKE "' + word + '%" ORDER BY freq2 DESC, freq DESC LIMIT 10;';
-	self.run_query(myquery, function(err, rows, fields) {
+  var predictions = [];
+  var myquery = 'SELECT word FROM words WHERE word LIKE \'' + word + '%\' ORDER BY used DESC, rank ASC LIMIT 4;';
+	self.run_query(myquery, function(err, result, fields) {
     if (err) {
       console.log('error:', err);
       return cb(err, []);
     } else {
+      var rows = result.rows;
       rows.forEach(function(w) {
-        results.push(w.palabra);
+        predictions.push(w.word);
       });
-      return cb(null, results);
+
+      return cb(null, predictions);
     }
   });
 };
