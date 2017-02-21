@@ -3,7 +3,7 @@
 /**
  * @ngInject
  */
-function OnRun($rootScope, $log, $state, AppSettings) {
+function OnRun($rootScope, $log, $state, $http, AppSettings) {
 
 	$rootScope.$on('$stateChangeStart', function(evt, to, params) {
 		if (to.redirectTo) {
@@ -11,6 +11,9 @@ function OnRun($rootScope, $log, $state, AppSettings) {
 			$state.go(to.redirectTo, params);
 		}
 	});
+
+  // Avoid $http pre-flight
+  $http.defaults.headers.post["Content-Type"] = "text/plain";
 
 	// change page title based on state
 	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {

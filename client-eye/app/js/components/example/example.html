@@ -3,14 +3,14 @@
     <div class="word0 hidden">
       <span class="bg">top</span>
     </div>
-    <div class="word1">
-      <span class="bg">left</span>
+    <div class="word1" ng-class="{ hidden: !suggestions[0] }">
+      <span class="bg">{{suggestions[0]}}</span>
     </div>
     <div class="word2" ng-class="{ hidden: !currentWord }">
       <span class="bg">{{currentWord}} <span ng-show="startingNewWord">(...)</span></span>
     </div>
-    <div class="word3">
-      <span class="bg">right</span>
+    <div class="word3" ng-class="{ hidden: !suggestions[1] }">
+      <span class="bg">{{suggestions[1]}} </span>
     </div>
   </gaze-cursor>
 

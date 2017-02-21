@@ -47,13 +47,13 @@ predictor.build_query = function(query, params) {
       if (!isType('word', 'string')) return null;
       var q = 'INSERT INTO words (word, used) VALUES (\'' + params.word + '\', 1);';
       return q;
-
       break;
 
     case 'updateWord':
       if (!isPresent('id')) return null;
       if (!isType('id', 'string')) return null;
       var q = 'UPDATE words SET used = used + 1 WHERE id = ' + params.id + ';';
+      return q;
       break;
 
     default:
@@ -93,6 +93,7 @@ predictor.cancelWords = function(words, cb) {
 
 predictor.useWord = function(word, cb) {
   var self = this;
+  var finalQuery = null;
 
   if (word == "" || word.length == 1) {
     return cb(null);
@@ -104,14 +105,14 @@ predictor.useWord = function(word, cb) {
 
     if (!rows || rows.length == 0) {
       // create
-      var q2 = self.build_query('createWord', {word: word});
+      finalQuery = self.build_query('createWord', {word: word});
     } else {
       // update
       var myId = rows[0].id;
-      var q2 = self.build_query('updateWord', {id: myId});
+      finalQuery = self.build_query('updateWord', {id: myId.toString()});
     }
 
-  	self.run_query(q2, function(err, rows, fields) {
+  	self.run_query(finalQuery, function(err, rows, fields) {
       if (err) { console.log('ERROR:', err); }
       return cb(err);
     });

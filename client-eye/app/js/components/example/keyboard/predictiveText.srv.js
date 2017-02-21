@@ -9,14 +9,9 @@ function PredictiveText($http) {
 
   service.useWord = function(w, cb) {
     if (w.length === 1) {
-      if (cb) { return cb(null); } else { return false; }
+      return new Promise().resolve(false);
     }
-
-    $http.post("http://localhost:8001/update", w)
-    .then(function(response) {
-      return cb ? cb(null) : true;
-    });
-
+    return $http.post("http://localhost:8001/update", w);
   };
 
   service.cancelWords = function(words, cb) {
@@ -36,16 +31,14 @@ function PredictiveText($http) {
     });
   };
 
-  service.getSuggestions = function(w, cb) {
-    $http.post("http://localhost:8001/predict", w)
-      .then(function(response) {
-        if (response && response.data) {
-          var words = response.data;
-          return cb(words);
-        } else {
-          return cb([]);
-        }
-      });
+  service.getSuggestions = function(words, cb) {
+    return $http.post("http://localhost:8001/predict", words).then((result) => {
+      if (result && result.data && result.data.data) {
+        return result.data.data;
+      } else {
+        return [];
+      }
+    });
   };
 
   return service;

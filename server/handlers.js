@@ -11,14 +11,12 @@ handlers = {
   middleware: function(req, res) {
 
     if (req.url === "/predict" && req.method === "POST") {
-
-			console.log('predicting...');
-
       var body = '';
       req.on('data', function (data) {
         body += data;
       });
       req.on('end', function () {
+        body = body.toLowerCase();
         handlers.predictor.predict(body, function(err, predictions) {
           res.writeHead(200, handlers.responseHeaders);
           res.end( JSON.stringify({data: predictions}));

@@ -11,9 +11,9 @@
     </li>
   </ul>
   <ul class="controls">
-    <li on-dwell dwell-trigger="selectWord" dwell-data="predictions[0]">
+    <li on-dwell dwell-trigger="selectWord" dwell-data="suggestions[0]">
       <div class="key">
-        {{ predictions[0] || '...' }}
+        {{ suggestions[0] || '...' }}
       </div>
     </li>
     <li on-dwell dwell-trigger="selectWord" dwell-data="currentWord">
@@ -21,9 +21,9 @@
         {{ currentWord || '...' }}
       </div>
     </li>
-    <li on-dwell dwell-trigger="selectWord" dwell-data="predictions[1]">
+    <li on-dwell dwell-trigger="selectWord" dwell-data="suggestions[1]">
       <div class="key">
-        {{ predictions[1] || '...' }}
+        {{ suggestions[1] || '...' }}
       </div>
     </li>
   </ul>

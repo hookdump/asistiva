@@ -16,8 +16,7 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
       scope.currentText = '';
       scope.currentWord = '';
       scope.startingNewWord = false; // the next letter will start a new word
-
-      scope.predictions = [null, null];
+      scope.suggestions = [null, null];
 
       var letters = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM,.'];
       letters.forEach((row, index) => {
@@ -46,13 +45,23 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
 
       scope.rows = letters;
 
+      scope.clearSuggestions = () => {
+        scope.suggestions = [null, null];
+      };
+
       scope.selectWord = (word) => {
         if (!word) {
           return;
         }
 
+        word = word.toLowerCase();
+        PredictiveText.useWord(word).then(() => {
+          console.log('OK! used ' + word);
+        })
+
         scope.currentText += ' ' + word;
         scope.currentWord = '';
+        scope.clearSuggestions();
         scope.startingNewWord = false;
       };
 
@@ -82,7 +91,7 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
               break;
 
             case 'repeat':
-              scope.selectKey(scope.lastKey);
+              return scope.selectKey(scope.lastKey);
               break;
 
             default:
@@ -93,8 +102,20 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
         }
 
         // Remember this key to possibly repeat it, unless it's the REPEAT key.
+        // REPEAT should never reach this... but just in case!
         if (! (key.action && key.action === 'repeat')) {
           scope.lastKey = key;
+        }
+
+        // Fetch Predictive Text suggestions
+        if (scope.currentWord.length > 0) {
+          PredictiveText.getSuggestions(scope.currentWord).then((words) => {
+            $log.info('SUGGESTIONS', words);
+            scope.suggestions[0] = words[0].toUpperCase();
+            scope.suggestions[1] = words[1].toUpperCase();
+          });
+        } else {
+          scope.clearSuggestions();
         }
 
       };
