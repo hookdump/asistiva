@@ -1,10 +1,8 @@
-# Asistiva 
-
-## Assistive Technology Web Framework
+# Asistiva - Assistive Technology Web Interface
 
 ## Project Goal
 
-Asistiva is **a set of tools for creating amazing UI/UX optimized to be used through different input methods**, including eye-tracking, head-tracking, button-less mouse, adapted switches, etc.
+Asistiva is **a set of tools for creating amazing web apps optimized to be used through different input methods** (i.e. including eye-tracking, head-tracking, button-less mouse, adapted switches, etc).
 
 ## Main Components
 
