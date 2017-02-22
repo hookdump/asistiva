@@ -23,6 +23,10 @@ Two demos are included:
 
 It is fed by an **Input Engine**, and it controls the **GazeCursor**. It makes the GazeCursor interact with the DOM elements in your app. It also adds some smoothing and easing to the **GazeCursor**, ideal for using fast moving and erratic inputs, like an eye-tracker.
 
+### Demo
+
+A virtual keyboard app is included to showcase the project. Instructions on how to set up the database for the demo coming soon! (required for the predictive text to work)
+
 
 ## Coming soon:
 
