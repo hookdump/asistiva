@@ -57,7 +57,7 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
         word = word.toLowerCase();
         PredictiveText.useWord(word).then(() => {
           console.log('OK! used ' + word);
-        })
+        });
 
         scope.currentText += ' ' + word;
         scope.currentWord = '';
@@ -92,7 +92,6 @@ var keyboard = function(GazeInput, PredictiveText, $log) {
 
             case 'repeat':
               return scope.selectKey(scope.lastKey);
-              break;
 
             default:
               $log.error('A key triggered an unknown action: ' + key.action);

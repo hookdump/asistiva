@@ -1,5 +1,5 @@
 'use strict';
-var servicesModule = require('./../_load.srv.js');
+var servicesModule = require('./../../../_load.srv.js');
 
 /**
  * @ngInject
