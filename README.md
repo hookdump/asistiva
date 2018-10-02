@@ -1,4 +1,5 @@
-# Asistiva - Assistive Technology Web Interface
+# Asistiva
+## Accesibility made simple.
 
 ## Project Goal
 
