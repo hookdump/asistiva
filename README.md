@@ -1,5 +1,4 @@
-# Asistiva
-## Accesibility made simple.
+# Asistiva: Accesibility made simple
 
 ## Project Goal
 
