@@ -13,16 +13,12 @@ server.handlers = require('./handlers');
 server.init = function() {
   var self = this;
   log.green('Initializing servers...');
-
-  async.series([
-    self.predictor.init(config),
-    self.handlers.init({predictor: self.predictor, config: config}),
-    self.connector_io.init({handlers: self.handlers, config: config}),
-    self.connector_zmq.init({connector_io: self.connector_io}, function() {
-      log.green('--- Up and running ---')
-    }),
-  ]);
-
+  self.predictor.init(config),
+  self.handlers.init({predictor: self.predictor, config: config}),
+  self.connector_io.init({handlers: self.handlers, config: config}),
+  self.connector_zmq.init({connector_io: self.connector_io}, function() {
+    log.green('--- Up and running ---')
+  });
 };
 
 
