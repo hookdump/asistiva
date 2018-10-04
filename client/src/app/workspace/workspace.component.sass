@@ -1,0 +1,66 @@
+$trackerSize: 100px
+
+body
+  overflow: hidden
+
+.gaze-workspace
+  border: 0px solid white
+  margin: 0 auto
+  background-color: #F0F0F0
+  .gaze-workspace-content
+    padding: $trackerSize+10 10px;
+
+.fluid-tracker, .full-tracker
+  width: 1132px
+  border: 0px
+  padding: 0
+  position: relative
+
+  .tracker
+    width: $trackerSize
+    height: $trackerSize
+    background-size: $trackerSize $trackerSize
+    position: absolute
+    z-index: 2000
+    pointer-events: none
+    opacity: 0.85
+
+  .bottom
+    bottom: 0
+
+  .top
+    top: 0
+
+  .mid
+    left: 50%
+    margin-left: -($trackerSize/2)
+
+  .left
+    left: 0
+
+  .right
+    right: 0
+
+.full-tracker
+  .bottom.left
+    background-image: url("../images/tracker-full-1.png")
+  .bottom.mid
+    background-image: url("../images/tracker-full-2.png")
+  .bottom.right
+    background-image: url("../images/tracker-full-3.png")
+  .top.left
+    background-image: url("../images/tracker-full-4.png")
+  .top.mid
+    background-image: url("../images/tracker-full-5.png")
+  .top.right
+    background-image: url("../images/tracker-full-6.png")
+
+.fluid-tracker
+  .bottom.left
+    background-image: url("../images/tracker-bot-left.png")
+  .bottom.right
+    background-image: url("../images/tracker-bot-right.png")
+  .top.left
+    background-image: url("../images/tracker-top-left.png")
+  .top.right
+    background-image: url("../images/tracker-top-right.png")
